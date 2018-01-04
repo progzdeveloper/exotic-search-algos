@@ -78,33 +78,4 @@ _It interpolation_search(_It first, _It last, const _Key& what, _Proj proj = std
 }
 
 
-/*! Usage example
-
-int main()
-{
-    using namespace std;
-    vector<string> vec = {
-        "Hello", "from", "GCC", __VERSION__, "!" 
-    };
-    
-    hash<string> proj;
-    sort(vec.begin(), vec.end(), [&proj](const string& x, const string& y) {
-        return proj(x) < proj(y);
-    });
-    
-    copy(vec.begin(), vec.end(), ostream_iterator<string>(cout, "\n"));
-    
-    string key = "!";
-    auto it = interpolation_search(vec.begin(), vec.end(), key, proj);
-    if (it != vec.end())
-        cout << "Found: '"<< key << "' at position: " << distance(vec.begin(), it) << endl;
-    else
-        cout << '\''<<  key << "' not found" << endl;
-    
-    return 0;
-    
-}
-*/
-
-
 
