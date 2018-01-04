@@ -4,11 +4,16 @@
 #include <iterator>
 
 template<class _It, class _Key, class _Comp>
-bool exponential_search(_It first, _It last, const _Key& key, _Comp comp)
+_It exponential_search(_It first, _It last, const _Key& key, _Comp comp)
 {
 	typedef typename std::iterator_traits<_It>::difference_type difference_type;
 
-	if (first == last) return false;
+	if (first == last) 
+		return last;
+
+#ifndef NDEBUG
+	assert(std::is_sorted(first, last, comp));
+#endif
 	difference_type size = std::distance(first, last);
 	difference_type bound = 1;
 	while (bound < size && !comp(key, first[bound]))
@@ -18,13 +23,11 @@ bool exponential_search(_It first, _It last, const _Key& key, _Comp comp)
 		bound = ((bound + 1) << 1) - 1;
 	}
 
-	return std::binary_search(first, first + (std::min)(bound, size), key);
+	return std::lower_bound(first, first + (std::min)(bound, size), key);
 }
 
 template<class _It, class _Key>
-inline bool exponential_search(_It first, _It last, const _Key& key)
-{
-	typedef typename std::iterator_traits<_It>::value_type value_type;
+inline _It exponential_search(_It first, _It last, const _Key& key) {
 	return exponential_search(first, last, key, std::less<_Key>());
 }
 
