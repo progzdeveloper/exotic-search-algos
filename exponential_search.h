@@ -7,7 +7,10 @@ template<class _It, class _Key, class _Comp>
 _It exponential_search(_It first, _It last, const _Key& key, _Comp comp)
 {
 	typedef typename std::iterator_traits<_It>::difference_type difference_type;
-
+	typedef typename std::iterator_traits<_It>::iterator_category category;
+	static_assert(std::is_same<category, std::random_access_iterator_tag>::value,
+		      "exponential_search() can be used with random access iterators only");
+	
 	if (first == last) 
 		return last;
 
